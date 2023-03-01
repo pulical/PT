@@ -30,9 +30,20 @@ jobs:
 #               issue_number: ${{ github.event.issue.number }},
 #               state: 'closed'
 #                })
-      - name: updating in Release
-        uses: ncipollo/release-action@v1
-        with: 
-          tag: ${{steps.date.outputs.date}}
-          artifacts: "./report/report.html"
-          replaceartifacts: true
+#       - name: updating in Release
+#         uses: ncipollo/release-action@v1
+#         with: 
+#           tag: ${{steps.date.outputs.date}}
+#           artifacts: "./report/report.html"
+#           replaceartifacts: true
+      - name: "Build & test"
+        run: |
+          echo "done!"
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GIT_SECRET }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            pytest.py
