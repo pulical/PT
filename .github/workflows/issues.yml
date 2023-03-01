@@ -30,10 +30,11 @@ jobs:
       - name: to Close issue
         #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
         run: |
-            github.issues.update({issue_number: ${{ github.event.issue.number }},state: 'closed'})
+            github.issues.update({state: 'closed'})
           # Close the issue
+        if: github.event.label.name == 'close'
       
-      - name: Close pull request
-        if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && success() }}
-        run: |
-          # Close the pull request
+#       - name: Close pull request
+#         if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && success() }}
+#         run: |
+#           # Close the pull request
