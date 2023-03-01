@@ -21,6 +21,18 @@ jobs:
             python pytest.py
           # Run your test cases here
           # Exit with non-zero status if tests fail
+          
+      - name: Get Time
+        id: time
+        uses: nanzm/get-time-action@v1.1
+        with:
+          timeZone: 8
+          format: 'YYYY-MM-DD-HH-mm-ss'
+      - name: Usage
+        env:
+          TIME: "${{ steps.time.outputs.time }}"
+        run: |
+          echo $TIME
       
 #       - name: Comment on issue
 #         if: ${{ github.event_name == 'issues' }}
@@ -42,7 +54,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GIT_SECRET }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "${{TIME}}"
           prerelease: true
           title: "Development Build"
           files: |
