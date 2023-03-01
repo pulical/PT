@@ -2,9 +2,9 @@ name: Issue workflow
 
 on:
   issues:
-    types: [opened, closed, updated]
+    types: [opened, closed, edited]
   pull_request:
-    types: [opened, closed, updated]
+    types: [opened, closed, edited]
     
 jobs:
   build:
