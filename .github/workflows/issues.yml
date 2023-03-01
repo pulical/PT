@@ -27,24 +27,32 @@ jobs:
         run: |
           # Add a comment to the issue with test results
       
-      - name: Automatically close issues that don't follow the issue template
-        uses: lucasbento/auto-close-issues@v1.0.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-close-message: "@${issue.user.login}: hello! :wave:\n\nThis issue is being automatically closed because it does not follow the issue template." # optional property
-          closed-issues-label: "🙁 Not following issue template" # optional property
+#       - name: Automatically close issues that don't follow the issue template
+#         uses: lucasbento/auto-close-issues@v1.0.2
+#         with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+#           issue-close-message: "@${issue.user.login}: hello! :wave:\n\nThis issue is being automatically closed because it does not follow the issue template." # optional property
+#           closed-issues-label: "🙁 Not following issue template" # optional property
      
-      - name: to Close issue
-        #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
-        run: |
-            github.issues.update({
-              owner: 'owner-name',
-              repo: 'repo-name',
-              issue_number: 1,
-              state: 'closed'
-                })
-            github-token: ${{ secrets.GIT_SECRET }}
-          # Close the issue
+      - name: Update issue status
+        uses: peter-evans/update-issue@v1
+        with:
+         repo-token: ${{ secrets.GIT_SECRET }}
+         issue-number: 1
+         state: closed
+
+      
+#       - name: to Close issue
+#         #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
+#         run: |
+#             github.issues.update({
+#               owner: 'owner-name',
+#               repo: 'repo-name',
+#               issue_number: 1,
+#               state: 'closed'
+#                 })
+#             github-token: ${{ secrets.GIT_SECRET }}
+#           # Close the issue
         #if: github.event.label.name == 'close'
       
 #       - name: Close pull request
