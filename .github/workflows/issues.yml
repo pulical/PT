@@ -38,6 +38,15 @@ jobs:
           TIME: "${{ steps.time.outputs.time }}"
         run: |
           echo $TIME
+          
+      - name: Remove dashes from timestamp
+        run: |
+          CLEAN_TIMESTAMP=${{ steps.time.outputs.time }}
+          CLEAN_TIMESTAMP=${CLEAN_TIMESTAMP//-/}
+          echo "Clean timestamp: $CLEAN_TIMESTAMP"
+        id: clean_time
+        env:
+          CLEAN_TIME: ${{ steps.clean_time.outputs.CLEAN_TIMESTAMP }}
       
       - name: "Build & test"
         run: |
@@ -45,7 +54,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GIT_SECRET }}"
-          automatic_release_tag: "${{ env.TIME }}"
+          automatic_release_tag: "${{ env.CLEAN_TIME }}"
           prerelease: true
           title: "Development Build"
           files: |
