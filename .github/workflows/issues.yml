@@ -34,6 +34,7 @@ jobs:
         #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
         run: |
             github.issues.update({state: 'closed'})
+            github-token: ${{ secrets.ACCESS_TOKEN }}
           # Close the issue
         #if: github.event.label.name == 'close'
       
