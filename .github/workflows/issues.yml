@@ -16,6 +16,7 @@ jobs:
         
       - name: Run tests
         run: |
+            ls
             pytest.py
           # Run your test cases here
           # Exit with non-zero status if tests fail
