@@ -32,7 +32,7 @@ jobs:
         run: |
             github.issues.update({state: 'closed'})
           # Close the issue
-        if: github.event.label.name == 'close'
+        #if: github.event.label.name == 'close'
       
 #       - name: Close pull request
 #         if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && success() }}
