@@ -27,9 +27,13 @@ jobs:
         run: |
           # Add a comment to the issue with test results
       
-      - name: Close issue
-        if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
+      - name: to Close issue
+        #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
         run: |
+              github.issues.update({
+              issue_number: ${{ github.event.issue.number }},
+              state: 'closed'
+              })
           # Close the issue
       
       - name: Close pull request
