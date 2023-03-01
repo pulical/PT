@@ -22,43 +22,17 @@ jobs:
           # Run your test cases here
           # Exit with non-zero status if tests fail
       
-      - name: Comment on issue
-        if: ${{ github.event_name == 'issues' }}
-        run: |
-          # Add a comment to the issue with test results
-              github.issues.update({
-              issue_number: ${{ github.event.issue.number }},
-              state: 'closed'
-               })
-#       - name: Automatically close issues that don't follow the issue template
-#         uses: lucasbento/auto-close-issues@v1.0.2
-#         with:
-#           github-token: ${{ secrets.GITHUB_TOKEN }}
-#           issue-close-message: "@${issue.user.login}: hello! :wave:\n\nThis issue is being automatically closed because it does not follow the issue template." # optional property
-#           closed-issues-label: "🙁 Not following issue template" # optional property
-     
-#       - name: Update issue status
-#         uses: peter-evans/close-issue@v2
-#         with:
-#          repo-token: ${{ secrets.GIT_SECRET }}
-#          issue-number: 1
-#          state: closed
-
-      
-#       - name: to Close issue
-#         #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
+#       - name: Comment on issue
+#         if: ${{ github.event_name == 'issues' }}
 #         run: |
-#             github.issues.update({
-#               owner: 'owner-name',
-#               repo: 'repo-name',
-#               issue_number: 1,
+#           # Add a comment to the issue with test results
+#               github.issues.update({
+#               issue_number: ${{ github.event.issue.number }},
 #               state: 'closed'
-#                 })
-#             github-token: ${{ secrets.GIT_SECRET }}
-#           # Close the issue
-        #if: github.event.label.name == 'close'
-      
-#       - name: Close pull request
-#         if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && success() }}
-#         run: |
-#           # Close the pull request
+#                })
+      - name: updating in Release
+        uses: ncipollo/release-action@v1
+        with: 
+          tag: ${{steps.date.outputs.date}}
+          artifacts: "./report/report.html"
+          replaceartifacts: true
