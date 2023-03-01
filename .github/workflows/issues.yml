@@ -54,7 +54,7 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GIT_SECRET }}"
-          automatic_release_tag: "${{TIME}}"
+          automatic_release_tag: "${ TIME }"
           prerelease: true
           title: "Development Build"
           files: |
