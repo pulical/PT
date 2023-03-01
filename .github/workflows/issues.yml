@@ -33,8 +33,13 @@ jobs:
       - name: to Close issue
         #if: ${{ github.event_name == 'issues' && github.event.action == 'closed' && success() }}
         run: |
-            github.issues.update({state: 'closed'})
-            github-token: ${{ secrets.ACCESS_TOKEN }}
+            github.issues.update({
+              owner: 'owner-name',
+              repo: 'repo-name',
+              issue_number: 1,
+              state: 'closed'
+                })
+            github-token: ${{ secrets.GIT_SECRET }}
           # Close the issue
         #if: github.event.label.name == 'close'
       
