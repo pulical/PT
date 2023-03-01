@@ -35,7 +35,7 @@ jobs:
 #           closed-issues-label: "🙁 Not following issue template" # optional property
      
       - name: Update issue status
-        uses: peter-evans/update-issue@v1
+        uses: lucasbento/auto-close-issues@v1.0.2
         with:
          repo-token: ${{ secrets.GIT_SECRET }}
          issue-number: 1
