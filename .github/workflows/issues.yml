@@ -69,4 +69,4 @@ jobs:
         with:
           tag: ${{ env.CLEAN_TIMESTAMP }}
           artifacts: "./dummy/report/report.html"
-          replacesArtifacts: true
+          replacesArtifacts: false
