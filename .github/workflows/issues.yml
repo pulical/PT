@@ -43,14 +43,12 @@ jobs:
 #           timeZone: 8
 #           format: 'YYYY-MM-DD-HH-mm-ss'
           
-#       - name: Remove dashes from timestamp
-#         run: |
-#           CLEAN_TIMESTAMP=${{ steps.time.outputs.time }}
-#           CLEAN_TIMESTAMP=${CLEAN_TIMESTAMP//-/}
-#           echo "Clean timestamp: $CLEAN_TIMESTAMP"
-#         id: clean_time
-#         env:
-#           CLEAN_TIMESTAMP: ${{ steps.clean_time.outputs.CLEAN_TIMESTAMP }}
+      - name: Create TAG
+        run: |
+            TAG_NAME=$(date +'%Y%m%d-%H%M%S')
+        id: clean_time
+        env:
+          CLEAN_TIMESTAMP: ${{ steps.clean_time.outputs.TAG_NAME }}
       
 #       - name: "Build & test"
 #         run: |
@@ -59,8 +57,9 @@ jobs:
       - name: Create release
         uses: marvinpinto/action-automatic-releases@latest
         with:
+        
           repo_token: "${{ secrets.GIT_SECRET }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "${{ env.CLEAN_TIMESTAMP }}"
           prerelease: true
           title: "Development Build"
           files: |
