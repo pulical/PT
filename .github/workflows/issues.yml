@@ -2,7 +2,7 @@ name: Issue workflow
 
 on:
   issues:
-    types: [opened, closed, edited, reopened]
+    types: [opened]
   pull_request:
     types: [opened, closed]
   workflow_dispatch: 
