@@ -35,9 +35,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest
-          # Run your test cases here
-          # Exit with non-zero status if tests fail
+          pytest ./dummy/main.py
 
       - name: Create TAG
         run: |
