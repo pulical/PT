@@ -18,36 +18,36 @@ jobs:
       - name: Run tests
         run: |
             ls
-            python pytest.py
+            python main.py
           # Run your test cases here
           # Exit with non-zero status if tests fail
           
-      - name: Get Time
-        id: time
-        uses: nanzm/get-time-action@v1.1
-        with:
-          timeZone: 8
-          format: 'YYYY-MM-DD-HH-mm-ss'
+#       - name: Get Time
+#         id: time
+#         uses: nanzm/get-time-action@v1.1
+#         with:
+#           timeZone: 8
+#           format: 'YYYY-MM-DD-HH-mm-ss'
           
-      - name: Remove dashes from timestamp
-        run: |
-          CLEAN_TIMESTAMP=${{ steps.time.outputs.time }}
-          CLEAN_TIMESTAMP=${CLEAN_TIMESTAMP//-/}
-          echo "Clean timestamp: $CLEAN_TIMESTAMP"
-        id: clean_time
-        env:
-          CLEAN_TIMESTAMP: ${{ steps.clean_time.outputs.CLEAN_TIMESTAMP }}
+#       - name: Remove dashes from timestamp
+#         run: |
+#           CLEAN_TIMESTAMP=${{ steps.time.outputs.time }}
+#           CLEAN_TIMESTAMP=${CLEAN_TIMESTAMP//-/}
+#           echo "Clean timestamp: $CLEAN_TIMESTAMP"
+#         id: clean_time
+#         env:
+#           CLEAN_TIMESTAMP: ${{ steps.clean_time.outputs.CLEAN_TIMESTAMP }}
       
-      - name: "Build & test"
-        run: |
-          echo "done!"
+#       - name: "Build & test"
+#         run: |
+#           echo "done!"
           
       - name: Create release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GIT_SECRET }}"
-          automatic_release_tag: "${{ steps.clean_time.outputs.CLEAN_TIMESTAMP }}"
+          automatic_release_tag: "latest"
           prerelease: true
           title: "Development Build"
           files: |
-            pytest.py
+            .\dummy\report.html
