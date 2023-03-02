@@ -5,6 +5,9 @@ on:
     types: [opened]
   pull_request:
     types: [opened, closed]
+  push:
+    tags:
+      - '*'
   workflow_dispatch: 
     
 jobs:
