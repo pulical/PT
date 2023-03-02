@@ -49,8 +49,8 @@ jobs:
       - name: Create TAG
         run: |
             TAG_NAME=$(date +'%Y%m%d-%H%M%S')
-            git tag $TAG_NAME
-            git push origin $TAG_NAME
+      #      git tag $TAG_NAME
+       #     git push origin $TAG_NAME
         id: clean_time
         env:
           CLEAN_TIMESTAMP: ${{ steps.clean_time.outputs.TAG_NAME }}
