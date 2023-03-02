@@ -8,15 +8,16 @@ on:
   push:
     tags:
       - '*'
-  workflow_dispatch: 
-    
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
+
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y \
@@ -30,48 +31,34 @@ jobs:
 
       - name: Install pytest-playwright
         run: |
-          pip install pytest-playwright   
-     
+          pip install pytest-playwright
+
       - name: Run tests
         run: |
-            ls
-            python ./dummy/main.py
+          pytest
           # Run your test cases here
           # Exit with non-zero status if tests fail
-          
-#       - name: Get Time
-#         id: time
-#         uses: nanzm/get-time-action@v1.1
-#         with:
-#           timeZone: 8
-#           format: 'YYYY-MM-DD-HH-mm-ss'
-          
+
       - name: Create TAG
         run: |
-            TAG_NAME=$(date +'%Y%m%d-%H%M%S')
-      #      git tag $TAG_NAME
-       #     git push origin $TAG_NAME
-        id: clean_time
+          TAG_NAME=$(date +'%Y%m%d-%H%M%S')
+          echo "::set-output name=tag_name::$TAG_NAME"
+        id: tag
+
+      - name: Create release
+        uses: actions/create-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         env:
-          CLEAN_TIMESTAMP: ${{ steps.clean_time.outputs.TAG_NAME }}
-      
-#       - name: "Build & test"
-#         run: |
-#           echo "done!"
-          
-#       - name: Create release
-#         uses: marvinpinto/action-automatic-releases@latest
-#         with:
-        
-#           repo_token: "${{ secrets.GIT_SECRET }}"
-#           automatic_release_tag: "${{ env.CLEAN_TIMESTAMP }}"
-#           prerelease: true
-#           title: "Development Build"
-#           files: |
-#             ./dummy/report.html
-      - name: Release
-        uses: ncipollo/release-action@v1
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: "latest"
-          artifacts: "./dummy/report/report.html"
-          replacesArtifacts: false
+          tag_name: ${{ steps.tag.outputs.tag_name }}
+          release_name: Release ${{ steps.tag.outputs.tag_name }}
+          body: Automated release created by GitHub Actions
+          draft: false
+          prerelease: false
+
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test report
+          path: ./dummy/report/report.html
