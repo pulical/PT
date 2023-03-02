@@ -72,6 +72,6 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ env.CLEAN_TIMESTAMP }}
+          tag: "latest"
           artifacts: "./dummy/report/report.html"
           replacesArtifacts: false
