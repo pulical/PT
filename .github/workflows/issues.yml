@@ -18,7 +18,7 @@ jobs:
       - name: Run tests
         run: |
             ls
-            python main.py
+            python ./dummy/main.py
           # Run your test cases here
           # Exit with non-zero status if tests fail
           
@@ -50,4 +50,4 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            .\dummy\report.html
+            ./dummy/report.html
