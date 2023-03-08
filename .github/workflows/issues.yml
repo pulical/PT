@@ -53,9 +53,11 @@ jobs:
             Release ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: false
-
-      - name: Upload report
-        uses: actions/upload-artifact@v2
-        with:
           name: Test report
           path: ./dummy/report.html
+
+#       - name: Upload report
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: Test report
+#           path: ./dummy/report.html
