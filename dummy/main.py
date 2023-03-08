@@ -1,18 +1,32 @@
 import pytest
+from playwright.sync_api import Playwright, Browser, Page
 
-def test_addition():
-    assert 2 + 2 == 4
+@pytest.fixture(scope='module')
+def playwright() -> Playwright:
+    from playwright.sync_api import Playwright
+    with Playwright() as playwright:
+        yield playwright
 
-def test_subtraction():
-    assert 5 - 3 == 2
+@pytest.fixture(scope='module')
+def browser(playwright: Playwright) -> Browser:
+    from playwright.sync_api import BrowserType
+    browser = playwright.chromium.launch()
+    yield browser
+    browser.close()
 
-def test_multiplication():
-    assert 3 * 4 == 12
+@pytest.fixture(scope='module')
+def page(browser: Browser) -> Page:
+    page = browser.new_page()
+    yield page
+    page.close()
 
-def test_division():
-    assert 8 / 4 == 2
+def test_playwright_search(page: Page):
+    page.goto('https://www.google.com')
+    page.fill('input[name="q"]', 'Playwright')
+    page.press('input[name="q"]', 'Enter')
+    assert page.title() == 'Playwright - Google Search'
 
 # You can add more test functions here
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     pytest.main(['-v', '--html=report.html'])
