@@ -47,10 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_SECRET }}
         with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          release_name: Release ${{ steps.tag.outputs.tag }}
-          body: |
-            Release ${{ steps.tag.outputs.tag }}
+          automatic_release_tag: ${{ steps.tag.outputs.tag }}
+          #release_name: Release ${{ steps.tag.outputs.tag }}
+#           body: |
+#             Release ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: true
           files: |
