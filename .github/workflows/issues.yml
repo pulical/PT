@@ -32,10 +32,11 @@ jobs:
       - name: Install pytest-playwright
         run: |
           pip install pytest-playwright
+          pip install pytest pytest-html
 
       - name: Run tests
         run: |
-          pytest ./dummy/main.py
+          pytest ./dummy/main.py --html=report.html
 
       - name: Create tag
         id: tag
