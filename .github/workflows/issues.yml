@@ -44,9 +44,10 @@ jobs:
 
       - name: Create release
         uses: marvinpinto/action-automatic-releases@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_SECRET }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GIT_SECRET }}
         with:
+          repo_token: ${{ secrets.GIT_SECRET }}
           automatic_release_tag: ${{ steps.tag.outputs.tag }}
           #release_name: Release ${{ steps.tag.outputs.tag }}
 #           body: |
