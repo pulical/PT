@@ -1,3 +1,4 @@
+
 name: Issue workflow
 
 on:
@@ -28,51 +29,27 @@ jobs:
           libnss3 \
           libxss1 \
           libasound2
-
       - name: Install pytest-playwright
         run: |
           pip install pytest-playwright
-          pip install pytest pytest-html
-
       - name: Run tests
         run: |
-          pytest ./dummy/main.py --html=report.html
-
+          pytest ./dummy/main.py
       - name: Create tag
         id: tag
         run: echo ::set-output name=tag::$(date +'%Y%m%d-%H%M%S')
      #     echo "name=tag_name::$TAG_NAME" >> $GITHUB_ENV
 
       - name: Create release
-        uses: marvinpinto/action-automatic-releases@latest
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GIT_SECRET }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_SECRET }}
         with:
-          repo_token: ${{ secrets.GIT_SECRET }}
-          automatic_release_tag: ${{ steps.tag.outputs.tag }}
-          #release_name: Release ${{ steps.tag.outputs.tag }}
-#           body: |
-#             Release ${{ steps.tag.outputs.tag }}
+          tag_name: ${{ steps.tag.outputs.tag }}
+          release_name: Release ${{ steps.tag.outputs.tag }}
+          body: |
+            Release ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: true
           files: |
              ./dummy/report.html
-#       - name: Create release
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GIT_SECRET }}
-#         with:
-#           tag_name: ${{ steps.tag.outputs.tag }}
-#           release_name: Release ${{ steps.tag.outputs.tag }}
-#           body: |
-#             Release ${{ steps.tag.outputs.tag }}
-#           draft: false
-#           prerelease: true
-#           files: |
-#              ./dummy/report.html
-
-#       - name: Upload report
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: Test report
-#           path: ./dummy/report.html
