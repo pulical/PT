@@ -53,8 +53,8 @@ jobs:
             Release ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: true
-          name: Test report
-          path: ./dummy/report.html
+          files: |
+             ./dummy/report.html
 
 #       - name: Upload report
 #         uses: actions/upload-artifact@v2
