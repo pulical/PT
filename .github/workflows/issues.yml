@@ -37,21 +37,20 @@ jobs:
         run: |
           pytest ./dummy/main.py
 
-      - name: Create TAG
-        run: |
-          TAG_NAME=$(date +'%Y%m%d-%H%M%S')
-          echo 'name="${{TAG_NAME}}"' >> $ GITHUB_ENV
+      - name: Create tag
+        id: tag
+        run: echo ::set-output name=tag::$(date +'%Y%m%d-%H%M%S')
      #     echo "name=tag_name::$TAG_NAME" >> $GITHUB_ENV
 
       - name: Create release
         uses: actions/create-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-#          tag_name: ${{ env.tag_name }}
-          release_name: Release ${{ env.name }}
-          body: Automated release created by GitHub Actions
+          tag_name: ${{ steps.tag.outputs.tag }}
+          release_name: Release ${{ steps.tag.outputs.tag }}
+          body: |
+            Release ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: false
 
